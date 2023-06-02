@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "seed": "ts-node --esm src/seed",
+    "backend": "ts-node --esm src/backend",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
