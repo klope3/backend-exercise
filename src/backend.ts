@@ -1,15 +1,10 @@
-import express from "express";
-import { prisma } from "../prisma/db.setup.js";
-import { validateRequest } from "zod-express-middleware";
-import { z } from "zod";
 import bcrypt from "bcrypt";
+import express from "express";
+import { z } from "zod";
+import { validateRequest } from "zod-express-middleware";
+import { prisma } from "../prisma/db.setup.js";
+import { createUserToken, getDataFromAuthToken } from "./auth-utils.js";
 import { BAD_REQUEST, FORBIDDEN, NOT_FOUND, OK } from "./statusCodes.js";
-import {
-  JWT_SECRET,
-  createUserToken,
-  getDataFromAuthToken,
-} from "./auth-utils.js";
-import jwt from "jsonwebtoken";
 
 const app = express();
 app.use(express.json());
@@ -53,7 +48,7 @@ app.get("/users/:id", async (req, res) => {
     return res.status(NOT_FOUND).send({ message: "User not found" });
   }
 
-  if (userWithRequestedId.email !== tokenData.email) {
+  if (userWithRequestedId.id !== tokenData.id) {
     return res.status(FORBIDDEN).send({ message: "Access denied" });
   }
 

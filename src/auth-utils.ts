@@ -6,7 +6,7 @@ import { z } from "zod";
 const saltRounds = 11;
 
 const authTokenSchema = z.object({
-  email: z.string(),
+  id: z.number(),
   iat: z.number(),
 });
 
@@ -16,7 +16,7 @@ export function hashPassword(password: string) {
 
 function createUnsecuredUserInfo(user: User) {
   return {
-    email: user.email,
+    id: user.id,
   };
 }
 
