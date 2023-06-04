@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import express from "express";
+import cors from "cors";
 import { z } from "zod";
 import { validateRequest } from "zod-express-middleware";
 import { prisma } from "../prisma/db.setup.js";
@@ -8,6 +9,7 @@ import { BAD_REQUEST, FORBIDDEN, NOT_FOUND, OK } from "./statusCodes.js";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello wolrd");
@@ -85,7 +87,7 @@ app.post(
 
     const token = createUserToken(user);
 
-    res.status(OK).send({ token });
+    res.status(OK).send({ token, userId: user.id });
   }
 );
 
